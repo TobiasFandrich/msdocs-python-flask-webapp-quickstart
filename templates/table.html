@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,13 +23,15 @@
             <tbody>
                 {% for participant in data['data']['records'] %}
                     {% for activity in participant['activities'] %}
-                    <tr>
-                        <td>{{ activity.activityName }}</td>
-                        <td>{{ activity.description }}</td>
-                        <td>{{ activity.activityStartDateTime }}</td>
-                        <td>{{ activity.activityEndDateTime }}</td>
-                        <td>{{ activity.wc24_act_location_text.value }}</td>
-                    </tr>
+                        {% if activity.wc24_act_category.value == 'Transfer' or activity.wc24_act_category.value == 'Meals' %}
+                        <tr>
+                            <td>{{ activity.activityName }}</td>
+                            <td>{{ activity.description }}</td>
+                            <td>{{ activity.activityStartDateTime }}</td>
+                            <td>{{ activity.activityEndDateTime }}</td>
+                            <td>{{ activity.wc24_act_location_text.value }}</td>
+                        </tr>
+                        {% endif %}
                     {% endfor %}
                 {% endfor %}
             </tbody>
