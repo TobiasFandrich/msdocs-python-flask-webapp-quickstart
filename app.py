@@ -5,11 +5,7 @@ import os
 
 # Load environment variables from .env file
 load_dotenv()
-print("TOKEN_ENDPOINT:", os.getenv('TOKEN_ENDPOINT'))
-print("DATA_ENDPOINT:", os.getenv('DATA_ENDPOINT'))
-print("CLIENT_ID:", os.getenv('CLIENT_ID'))
-print("USERNAME:", os.getenv('USER'))
-print("PASSWORD:", os.getenv('PASSWORD'))
+
 app = Flask(__name__)
 
 # Retrieve the values from environment variables
@@ -40,9 +36,6 @@ def data(event_code, participant_id):
     )
     token = token_response.json().get('access_token')
 
-    print(token)
-
-
     # Use the token to get the data
     data_response = requests.get(
         f"{DATA_ENDPOINT}?eventCode={event_code}&filter={{\"participantIdOrUuid\": \"{participant_id}\"}}",
@@ -52,8 +45,11 @@ def data(event_code, participant_id):
             'Accept': 'application/json'
         }
     )
+
+
     data = data_response.json()
     print("API Response:", data)
+
     # Render the data in the HTML table
     return render_template('table.html', data=data)
 
